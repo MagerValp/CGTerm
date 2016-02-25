@@ -1,0 +1,15 @@
+void ui_init(void);
+void ui_menu(void);
+void ui_local_init(void);
+void ui_metakey(SDL_keysym *keysym);
+void ui_menukey(SDL_keysym *keysym);
+void ui_inputkey(SDL_keysym *keysym);
+void ui_xferkey(SDL_keysym *keysym);
+void ui_requestkey(SDL_keysym *keysym);
+void ui_bookmarkkey(SDL_keysym *keysym);
+void ui_selectdirkey(SDL_keysym *keysym);
+void ui_inputcall(int width, char *title, char *text, void (*donecall)(char *), Focus focus);
+void ui_display_net_status(int code, char *message);
+void ui_connect(char *host);
+void ui_pageup(void);
+void ui_pagedown(void);

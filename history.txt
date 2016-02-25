@@ -1,0 +1,49 @@
+Todo
+----
+
+ * File upload with Punter
+ * Better macros
+ * Native keyboard
+ * Bookmark editing
+
+
+CGTerm 1.7
+----------
+
+ * Fixed default keyboard
+ * Fixed d71 and d81 handling
+ * Added CGEdit
+ * Updated address book defaults
+
+
+CGTerm 1.6
+----------
+
+ * 80 column mode
+ * Fullscreen toggle for all platforms
+ * Optimized screen save
+ * File upload with Xmodem, Xmodem/CRC, and Xmodem-1k
+ * Address book
+ * Read/write to d64/d71/d81
+ * File drop box
+ * Sound toggle
+ * Config file is created if none exists
+ * Scrollback buffer
+ * X-modem padding is stripped and added correctly
+ * Added chat client
+
+
+CGTerm 1.5 - the Leech Edition
+------------------------------
+
+ * Windows and MacOS X ports
+ * File download with Xmodem, Xmodem/CRC, Xmodem-1k, and Punter protocols.
+ * Screen capture to SEQ file, and SEQ file playback.
+ * Keyboard macros.
+ * Fullscreen mode.
+
+
+CGTerm 1.0
+----------
+
+First release

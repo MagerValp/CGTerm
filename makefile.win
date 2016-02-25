@@ -1,0 +1,78 @@
+# for windows:
+PREFIX=.
+SOCKETLIBS=-lwsock32
+EXESUFFIX=.exe
+
+CC=gcc
+CFLAGS=-O3 -Wall `sdl-config --cflags` -DWINDOWS
+LDFLAGS=`sdl-config --libs` $(SOCKETLIBS)
+
+
+OBJS= \
+	kernal.o \
+	gfx.o \
+	net.o \
+	config.o \
+	keyboard.o \
+	menu.o \
+	font.o \
+	timer.o \
+	crc.o \
+	sound.o \
+	macro.o \
+	ui.o
+
+TERMOBJS= \
+	xfer.o \
+	xmodem.o \
+	punter.o \
+	diskimage.o \
+	dir.o \
+	fileselector.o \
+	ui_term.o
+
+CHATOBJS= \
+	chat.o \
+	status.o \
+	ui_chat.o
+
+EDITOBJS= \
+	ui_edit.o \
+	fileselector.o \
+	dir.o \
+	diskimage.o
+
+
+%.o: %c
+	$(CC) $(CFLAGS) -c $<
+
+
+all: cgterm cgchat cgedit
+
+cgterm: cgterm.o $(OBJS) $(TERMOBJS)
+	$(CC) -o cgterm $^ $(LDFLAGS)
+
+cgchat: cgchat.o $(OBJS) $(CHATOBJS)
+	$(CC) -o cgchat $^ $(LDFLAGS)
+
+cgedit: cgedit.o $(OBJS) $(EDITOBJS)
+	$(CC) -o cgedit $^ $(LDFLAGS)
+
+install: all
+	strip cgterm$(EXESUFFIX)
+	strip cgchat$(EXESUFFIX)
+	strip cgedit$(EXESUFFIX)
+	-mkdir cgterm-win32 > /dev/null 2>&1
+	cp cgterm$(EXESUFFIX) cgterm-win32/
+	cp cgchat$(EXESUFFIX) cgterm-win32/
+	cp cgedit$(EXESUFFIX) cgterm-win32/
+	cp *.bmp *.wav cgterm-win32/
+	cp cgterm.txt cgchat.txt history.txt cgterm-win32/
+	cp SDL.dll cgterm-win32/
+	cp windows.kbd cgterm-win32/windows.kbd
+#	cp config.win cgterm-win32/cgterm.cfg
+
+clean:
+	rm -f cgterm$(EXESUFFIX) cgchat$(EXESUFFIX) cgedit$(EXESUFFIX)
+	rm -f cgchat.cfg cgterm.cfg cgedit.cfg
+	rm -f *.o *~
