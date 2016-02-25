@@ -1,12 +1,12 @@
 typedef struct fileselector {
-  char *title;
-  int numentries;
-  int current;
-  int offset;
-  int filesperpage;
-  Dir *dir;
-  DirEntry *selectedfile;
-  char path[256];
+    char *title;
+    int numentries;
+    int current;
+    int offset;
+    int filesperpage;
+    Dir *dir;
+    DirEntry *selectedfile;
+    char path[256];
 } FileSelector;
 
 
@@ -22,5 +22,5 @@ void fs_draw(FileSelector *fs);
 
 signed int fs_read_dir(FileSelector *fs, char *path);
 
-/* Let user select a file */  
+/* Let user select a file */
 signed char fs_select(FileSelector *fs);

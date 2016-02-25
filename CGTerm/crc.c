@@ -35,15 +35,15 @@ static unsigned short crctab[] = {
 
 
 unsigned short crc16_calc(unsigned char *buffer, int len) {
-  unsigned short crc = 0;
-
-  while (len-- > 0) {
-    crc = (crc<<8) ^ crctab[(crc>>8) ^ (*buffer++)];
-  }
-  return (crc);
+    unsigned short crc = 0;
+    
+    while (len-- > 0) {
+        crc = (crc<<8) ^ crctab[(crc>>8) ^ (*buffer++)];
+    }
+    return (crc);
 }
 
 
 int crc_init(void) {
-  return(0);
+    return(0);
 }

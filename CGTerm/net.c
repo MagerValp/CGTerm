@@ -46,109 +46,109 @@ void (*net_status)(int, char *);
 
 
 int net_connect(char *host, int port, void (*status)(int, char *)) {
-  struct sockaddr_in address;
-  struct hostent *hostent;
+    struct sockaddr_in address;
+    struct hostent *hostent;
 #ifdef __WIN32__
-  WSADATA wsaData; 
-  u_long nonblock = 1;
-
-  if (!winsockstarted) {
-    if (WSAStartup(MAKEWORD(2, 0), &wsaData) != 0) {
-      printf("WinSock startup failed\n");
-      return(1);
+    WSADATA wsaData;
+    u_long nonblock = 1;
+    
+    if (!winsockstarted) {
+        if (WSAStartup(MAKEWORD(2, 0), &wsaData) != 0) {
+            printf("WinSock startup failed\n");
+            return(1);
+        }
+        atexit((void (*)(void))WSACleanup);
+        winsockstarted = 1;
     }
-    atexit((void (*)(void))WSACleanup);
-    winsockstarted = 1;
-  }
 #endif
-  net_status = status;
-  if ((conn = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
-    if (net_status) net_status(2, "Socket call failed");
-    return(1);
-  }
-  address.sin_family = AF_INET;
-  address.sin_port = htons(port);
-
-  if (isdigit((int) host[strlen(host) - 1])) {
-    address.sin_addr.s_addr = inet_addr(host);
-  } else {
-    hostent = gethostbyname(host); 
-    if (hostent) { 
-      address.sin_addr = *((struct in_addr *) hostent->h_addr);
+    net_status = status;
+    if ((conn = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
+        if (net_status) net_status(2, "Socket call failed");
+        return(1);
     }
-    else {
-      if (net_status) net_status(2, "Unknown host");
-      return(1);
+    address.sin_family = AF_INET;
+    address.sin_port = htons(port);
+    
+    if (isdigit((int) host[strlen(host) - 1])) {
+        address.sin_addr.s_addr = inet_addr(host);
+    } else {
+        hostent = gethostbyname(host);
+        if (hostent) {
+            address.sin_addr = *((struct in_addr *) hostent->h_addr);
+        }
+        else {
+            if (net_status) net_status(2, "Unknown host");
+            return(1);
+        }
     }
-  }
-
-  buflen = 0;
-  bufptr = buffer;
-  if (net_status) net_status(0, "Connecting...");
-  if (connect(conn, (struct sockaddr *)&address, sizeof(address)) == 0) {
+    
+    buflen = 0;
+    bufptr = buffer;
+    if (net_status) net_status(0, "Connecting...");
+    if (connect(conn, (struct sockaddr *)&address, sizeof(address)) == 0) {
 #ifdef WIN32
-    ioctlsocket(conn, FIONBIO, &nonblock);
+        ioctlsocket(conn, FIONBIO, &nonblock);
 #else
-    fcntl(conn, F_SETFL, O_NONBLOCK);
+        fcntl(conn, F_SETFL, O_NONBLOCK);
 #endif
-    if (net_status) net_status(1, "Connected");
-    return(0);
-  } else {
-    if (net_status) net_status(2, strerror(errno));
-    return(1);
-  }
+        if (net_status) net_status(1, "Connected");
+        return(0);
+    } else {
+        if (net_status) net_status(2, strerror(errno));
+        return(1);
+    }
 }
 
 
 signed int net_receive(void) {
-  if (!ISCONNECTED()) {
-    return(-2);
-  }
-  if (!buflen) {
-    buflen = (signed int)recv(conn, buffer, BUFSIZE, 0);
-    if (buflen == 0) {
-      net_disconnect();
-      return(-2);
-    } else if (buflen < 0) {
-      buflen = 0;
-      if (WOULDBLOCK()) {
-	return(-1);
-      } else {
-	if (net_status) net_status(2, strerror(errno));
-	net_disconnect();
-	return(-2);
-      }
+    if (!ISCONNECTED()) {
+        return(-2);
     }
-    bufptr = buffer;
-  }
-  --buflen;
-  return(*bufptr++);
+    if (!buflen) {
+        buflen = (signed int)recv(conn, buffer, BUFSIZE, 0);
+        if (buflen == 0) {
+            net_disconnect();
+            return(-2);
+        } else if (buflen < 0) {
+            buflen = 0;
+            if (WOULDBLOCK()) {
+                return(-1);
+            } else {
+                if (net_status) net_status(2, strerror(errno));
+                net_disconnect();
+                return(-2);
+            }
+        }
+        bufptr = buffer;
+    }
+    --buflen;
+    return(*bufptr++);
 }
 
 
 void net_send(unsigned char c) {
-  if (ISCONNECTED()) {
-    send(conn, &c, 1, 0);
-  }
+    if (ISCONNECTED()) {
+        send(conn, &c, 1, 0);
+    }
 }
 
 
 void net_send_string(unsigned char *s) {
-  while (*s) {
-    net_send(*s++);
-  }
+    while (*s) {
+        net_send(*s++);
+    }
 }
 
 
 void net_disconnect(void) {
-  if (ISCONNECTED()) {
-    CLOSESOCKET(conn);
-    conn = INVALID_SOCKET;
-    buflen = 0;
-  }
+    if (ISCONNECTED()) {
+        CLOSESOCKET(conn);
+        conn = INVALID_SOCKET;
+        buflen = 0;
+    }
 }
 
 
 int net_connected(void) {
-  return(ISCONNECTED());
+    return(ISCONNECTED());
 }

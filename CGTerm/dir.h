@@ -1,20 +1,20 @@
 typedef struct direntry {
-  struct direntry *next;
-  struct direntry *prev;
-  char *name;
-  unsigned char rawname[16];
-  unsigned int size;
-  int type;
-  int closed;
-  int locked;
-  int track;
-  int sector;
+    struct direntry *next;
+    struct direntry *prev;
+    char *name;
+    unsigned char rawname[16];
+    unsigned int size;
+    int type;
+    int closed;
+    int locked;
+    int track;
+    int sector;
 } DirEntry;
 
 typedef struct dir {
-  int numentries;
-  char *title;
-  DirEntry *firstentry;
+    int numentries;
+    char *title;
+    DirEntry *firstentry;
 } Dir;
 
 extern char *dir_type[];

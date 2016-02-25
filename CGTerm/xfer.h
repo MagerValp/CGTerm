@@ -1,15 +1,15 @@
 typedef enum direction {
-  DIR_NONE = 0,
-  DIR_SEND,
-  DIR_RECV
+    DIR_NONE = 0,
+    DIR_SEND,
+    DIR_RECV
 } Direction;
 
 typedef enum protocol {
-  PROT_NONE = 0,
-  PROT_XMODEM,
-  PROT_XMODEMCRC,
-  PROT_XMODEM1K,
-  PROT_PUNTER
+    PROT_NONE = 0,
+    PROT_XMODEM,
+    PROT_XMODEMCRC,
+    PROT_XMODEM1K,
+    PROT_PUNTER
 } Protocol;
 
 

@@ -1,7 +1,7 @@
 struct menu {
-  signed int row;
-  char *key;
-  char *text;
+    signed int row;
+    char *key;
+    char *text;
 };
 
 

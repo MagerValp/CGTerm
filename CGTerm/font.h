@@ -1,8 +1,8 @@
 typedef struct font {
-  SDL_Surface *surface;
-  int width;
-  int height;
-  int numchars;
+    SDL_Surface *surface;
+    int width;
+    int height;
+    int numchars;
 } Font;
 
 

@@ -1,63 +1,63 @@
 typedef enum imagetype {
-  D64 = 1,
-  D71,
-  D81
+    D64 = 1,
+    D71,
+    D81
 } ImageType;
 
 typedef enum filetype {
-  T_DEL = 0,
-  T_SEQ,
-  T_PRG,
-  T_USR,
-  T_REL,
-  T_CBM,
-  T_DIR
+    T_DEL = 0,
+    T_SEQ,
+    T_PRG,
+    T_USR,
+    T_REL,
+    T_CBM,
+    T_DIR
 } FileType;
 
 typedef struct ts {
-  unsigned char track;
-  unsigned char sector;
+    unsigned char track;
+    unsigned char sector;
 } TrackSector;
 
 typedef struct diskimage {
-  char *filename;
-  int size;
-  ImageType type;
-  unsigned char *image;
-  TrackSector bam;
-  TrackSector bam2;
-  TrackSector dir;
-  int openfiles;
-  int blocksfree;
-  int modified;
-  int status;
-  int interleave;
-  TrackSector statusts;
+    char *filename;
+    int size;
+    ImageType type;
+    unsigned char *image;
+    TrackSector bam;
+    TrackSector bam2;
+    TrackSector dir;
+    int openfiles;
+    int blocksfree;
+    int modified;
+    int status;
+    int interleave;
+    TrackSector statusts;
 } DiskImage;
 
 typedef struct rawdirentry {
-  TrackSector nextts;
-  unsigned char type;
-  TrackSector startts;
-  unsigned char rawname[16];
-  TrackSector relsidets;
-  unsigned char relrecsize;
-  unsigned char unused[4];
-  TrackSector replacetemp;
-  unsigned char sizelo;
-  unsigned char sizehi;
+    TrackSector nextts;
+    unsigned char type;
+    TrackSector startts;
+    unsigned char rawname[16];
+    TrackSector relsidets;
+    unsigned char relrecsize;
+    unsigned char unused[4];
+    TrackSector replacetemp;
+    unsigned char sizelo;
+    unsigned char sizehi;
 } RawDirEntry;
 
 typedef struct imagefile {
-  DiskImage *diskimage;
-  RawDirEntry *rawdirentry;
-  char mode;
-  int position;
-  TrackSector ts;
-  TrackSector nextts;
-  unsigned char *buffer;
-  int bufptr;
-  int buflen;
+    DiskImage *diskimage;
+    RawDirEntry *rawdirentry;
+    char mode;
+    int position;
+    TrackSector ts;
+    TrackSector nextts;
+    unsigned char *buffer;
+    int bufptr;
+    int buflen;
 } ImageFile;
 
 
