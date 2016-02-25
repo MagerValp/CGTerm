@@ -117,7 +117,7 @@ Dir *dir_read_opendir(DIR *dirhandle, char *path) {
   Dir *dir;
   DirEntry *entry = NULL;
   struct dirent *dirent;
-  unsigned namelen;
+  size_t namelen;
   char *p;
 #ifdef WINDOWS
   DIR *d;

@@ -116,7 +116,7 @@ void font_draw_string(int x, int y, char *text) {
   dest.y = y;
   src.y = 0;
   while (*text) {
-    src.x = (*text) * src.w;
+    src.x = (*(unsigned char *)text) * src.w;
     SDL_BlitSurface(font_current->surface, &src, font_draw_surface, &dest);
     ++text;
     dest.x += src.w;

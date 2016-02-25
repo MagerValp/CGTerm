@@ -203,7 +203,7 @@ void menu_print_key(int line, char *key, char *text) {
   y = menu_height / 2 - 90 + line * 12;
   x = menu_width / 2 - 135;
   font_set_font(menu_font[1]);
-  font_draw_string(x - strlen(key) * 5, y, key);
+  font_draw_string(x - (int)strlen(key) * 5, y, key);
   font_set_font(menu_font[0]);
   font_draw_string(x + 26, y, text);
 }
@@ -397,7 +397,7 @@ void menu_draw_message(char *message) {
   menu_cls();
   menu_draw_borderbox(7, 87, menu_width - 8, menu_height - 88);
   font_set_font(menu_font[0]);
-  font_draw_string(160 - strlen(message)*5, 100 - 6, message);
+  font_draw_string(160 - (int)strlen(message) * 5, 100 - 6, message);
 }
 
 

@@ -39,7 +39,7 @@ void ui_inputcall(int width, char *title, char *text, void (*donecall)(char *), 
   }
   input_width = width;
   if (text) {
-    input_pos = input_len = strlen(text);
+    input_pos = input_len = (int)strlen(text);
   } else {
     input_pos = input_len = 0;
   }
@@ -184,7 +184,7 @@ void ui_connect(char *host) {
 
   if ((port = strchr(input_buffer, ' '))) {
     *port++ = 0;
-    cfg_port = strtol(port, (char **)NULL, 10);
+    cfg_port = (unsigned int)strtol(port, (char **)NULL, 10);
     if (cfg_port <= 0 || cfg_port > 65535) {
       ui_display_net_status(2, "Illegal port number");
       return;

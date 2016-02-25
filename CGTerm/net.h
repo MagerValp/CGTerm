@@ -1,4 +1,4 @@
-int net_connect(unsigned char *host, int port, void (*status)(int, char *));
+int net_connect(char *host, int port, void (*status)(int, char *));
 signed int net_receive(void);
 void net_send(unsigned char c);
 void net_send_string(unsigned char *s);

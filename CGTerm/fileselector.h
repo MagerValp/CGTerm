@@ -1,12 +1,12 @@
 typedef struct fileselector {
-  unsigned char *title;
+  char *title;
   int numentries;
   int current;
   int offset;
   int filesperpage;
   Dir *dir;
   DirEntry *selectedfile;
-  unsigned char path[256];
+  char path[256];
 } FileSelector;
 
 

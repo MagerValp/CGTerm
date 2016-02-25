@@ -127,7 +127,7 @@ int main(int argc, char *argv[]) {
       break;
 
     case 'd':
-      cfg_senddelay = strtol(optarg, (char **)NULL, 10);
+      cfg_senddelay = (int)strtol(optarg, (char **)NULL, 10);
       if (cfg_senddelay < 0 || cfg_senddelay > 10000) {
 	usage();
 	return(1);
@@ -147,7 +147,7 @@ int main(int argc, char *argv[]) {
       break;
 
     case 'r':
-      cfg_reconnect = strtol(optarg, (char **)NULL, 10);
+      cfg_reconnect = (int)strtol(optarg, (char **)NULL, 10);
       if (cfg_reconnect < 1 || cfg_reconnect > 10000) {
 	usage();
 	return(1);
@@ -159,7 +159,7 @@ int main(int argc, char *argv[]) {
       break;
 
     case 'z':
-      if ((cfg_zoom = strtol(optarg, (char **)NULL, 10)) == 0) {
+      if ((cfg_zoom = (int)strtol(optarg, (char **)NULL, 10)) == 0) {
 	usage();
 	return(1);
       }

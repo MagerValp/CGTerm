@@ -129,7 +129,7 @@ signed int punter_recv_block(int len) {
   while (bytecnt < len) {
     if ((c = xfer_recv_byte_error(500, 10)) < 0) {
       if (bytecnt == 3) {
-	if (strncmp("S/B", xfer_buffer, 3) == 0) {
+	if (memcmp("S/B", xfer_buffer, 3) == 0) {
 	  menu_update_xfer_progress("Transfer canceled by remote", xfer_saved_bytes, 0);
 	  gfx_vbl();
 	  return(-1);
@@ -155,7 +155,7 @@ signed int punter_recv_block(int len) {
     //printf("punter_recv_block: received byte %3d: %02x\n", bytecnt, c);
     xfer_buffer[bytecnt++] = c;
     if (bytecnt == 4) {
-      if (strncmp("ACK", xfer_buffer, 3) == 0) {
+      if (memcmp("ACK", xfer_buffer, 3) == 0) {
 	menu_update_xfer_progress("Lost sync, retrying...", xfer_saved_bytes, 0);
 	gfx_vbl();
 	if (xfer_buffer[3] == 'A') {
@@ -168,19 +168,19 @@ signed int punter_recv_block(int len) {
       }
     }
     if (bytecnt == 8) {
-      if (strncmp("ACKACK", xfer_buffer + 2, 6) == 0) {
+      if (memcmp("ACKACK", xfer_buffer + 2, 6) == 0) {
 	menu_update_xfer_progress("Lost sync, retrying...", xfer_saved_bytes, 0);
 	gfx_vbl();
 	//printf("punter_recv_block: lost sync, restarting block\n");
 	goto restart;
       }
-      if (strncmp("CKACKA", xfer_buffer + 2, 6) == 0) {
+      if (memcmp("CKACKA", xfer_buffer + 2, 6) == 0) {
 	menu_update_xfer_progress("Lost sync, retrying...", xfer_saved_bytes, 0);
 	gfx_vbl();
 	//printf("punter_recv_block: lost sync, restarting block\n");
 	goto restart;
       }
-      if (strncmp("KACKAC", xfer_buffer + 2, 6) == 0) {
+      if (memcmp("KACKAC", xfer_buffer + 2, 6) == 0) {
 	menu_update_xfer_progress("Lost sync, retrying...", xfer_saved_bytes, 0);
 	gfx_vbl();
 	//printf("punter_recv_block: lost sync, restarting block\n");

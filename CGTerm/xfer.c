@@ -112,7 +112,7 @@ signed int xfer_recv_byte_error(int timeout, int errorcnt) {
 
 
 int xfer_save_data(unsigned char *data, int length) {
-  int l;
+  size_t l;
   int written = 0;
 
   while (written < length) {
@@ -128,7 +128,7 @@ int xfer_save_data(unsigned char *data, int length) {
 
 
 int xfer_load_data(unsigned char *data, int length) {
-  int l;
+  size_t l;
   int read = 0;
 
   while (read < length) {
@@ -181,7 +181,7 @@ int xfer_copy_from_image(char *imgname, char *src, char *dest) {
   ImageFile *imgfile;
   unsigned char rawname[16];
   FILE *outh;
-  char buffer[4096];
+  unsigned char buffer[4096];
   int l;
 
   if ((di = di_load_image(imgname)) == NULL) {
@@ -256,7 +256,7 @@ void xfer_send(char *filename) {
       gfx_vbl();
       return;
     }
-    xfer_file_size = ftell(xfer_sendfile);
+    xfer_file_size = (int)ftell(xfer_sendfile);
     fseek(xfer_sendfile, 0, SEEK_SET);
 
     if (xfer_protocol == PROT_XMODEM) {
@@ -287,7 +287,8 @@ void xfer_save_file_in_image(char *filename) {
   DiskImage *di;
   ImageFile *to;
   unsigned char buf[4096];
-  int bytesleft, l;
+  char msg[40];
+  size_t bytesleft, l;
   unsigned char rawname[16];
   
   if ((di = di_load_image(cfg_xferdir)) == NULL) {
@@ -323,7 +324,7 @@ void xfer_save_file_in_image(char *filename) {
       menu_draw_message("Read error!");
       goto done;
     }
-    if (di_write(to, buf, l) != l) {
+    if (di_write(to, buf, (int)l) != l) {
       menu_draw_message("Write error!");
       goto done;
     }
@@ -337,8 +338,8 @@ void xfer_save_file_in_image(char *filename) {
 
   remove(xfer_tempdlname);
 
-  sprintf(buf, "Saved %-24s", filename);
-  menu_draw_message(buf);
+  sprintf(msg, "Saved %-24s", filename);
+  menu_draw_message(msg);
 
  done:
   menu_show();
@@ -353,7 +354,8 @@ void xfer_save_file_in_image(char *filename) {
 void xfer_save_file_in_dir(char *filename) {
   FILE *from, *to;
   unsigned char buf[4096];
-  int bytesleft, l;
+  char msg[40];
+  size_t bytesleft, l;
   char name[256];
 
   if ((from = fopen(xfer_tempdlname, "rb")) == NULL) {
@@ -399,8 +401,8 @@ void xfer_save_file_in_dir(char *filename) {
 
   remove(xfer_tempdlname);
 
-  sprintf(buf, "Saved %-24s", filename);
-  menu_draw_message(buf);
+  sprintf(msg, "Saved %-24s", filename);
+  menu_draw_message(msg);
 
  done:
   menu_show();

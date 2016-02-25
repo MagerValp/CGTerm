@@ -212,14 +212,14 @@ void ffd2(unsigned char a) {
 }
 
 
-void print(unsigned char *s) {
+void print(char *s) {
   while (*s) {
     ffd2(*s++);
   }
 }
 
 
-void print_ascii(unsigned char *s) {
+void print_ascii(char *s) {
   char c;
 
   while ((c = *s++)) {

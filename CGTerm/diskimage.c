@@ -537,7 +537,8 @@ void free_chain(DiskImage *di, TrackSector ts) {
 
 DiskImage *di_load_image(char *name) {
   FILE *file;
-  int filesize, l, read;
+  long filesize;
+  size_t l, read;
   DiskImage *di;
 
   /* open image */
@@ -593,7 +594,7 @@ DiskImage *di_load_image(char *name) {
     return(NULL);
   }
 
-  di->size = filesize;
+  di->size = (int)filesize;
 
   /* allocate buffer for image */
   if ((di->image = malloc(filesize)) == NULL) {
@@ -690,7 +691,7 @@ DiskImage *di_create_image(char *name, int size) {
 
 void di_sync(DiskImage *di) {
   FILE *file;
-  int l, left;
+  size_t l, left;
   unsigned char *image;
 
   if ((file = fopen(di->filename, "wb"))) {

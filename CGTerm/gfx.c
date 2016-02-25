@@ -337,9 +337,10 @@ void gfx_scrollup(void) {
 }
 
 
-void gfx_conv_screen_to_pet(unsigned char *chars, unsigned char *colors, unsigned char *petsciibuf, int *lastcolor, int *reverse, int addcr, int width) {
+int gfx_conv_screen_to_pet(unsigned char *chars, unsigned char *colors, unsigned char *petsciibuf, int *lastcolor, int *reverse, int addcr, int width) {
   int column, empty;
   int i, c;
+  unsigned char *startptr = petsciibuf;
 
   for (column = 0; column < width; ++column) {
     empty = 1;
@@ -383,6 +384,7 @@ void gfx_conv_screen_to_pet(unsigned char *chars, unsigned char *colors, unsigne
     }
   }
   *petsciibuf = 0;
+  return (int)petsciibuf - (int)startptr;
 }
 
 
@@ -390,12 +392,13 @@ void gfx_savescreen(char *filename) {
   unsigned char converted[80 * 3 + 1]; // max 3 bytes per char
   FILE *f_screen;
   int row, lastcolor = 256, reverse = 0;
+  int len;
 
   resetcursor();
   if ((f_screen = fopen(filename, "wb"))) {
     for (row = 0; row < 25; ++row) {
-      gfx_conv_screen_to_pet(gfx_0400_buffer + gfx_offset + row * cfg_columns, gfx_d800_buffer + gfx_offset + row * cfg_columns, converted, &lastcolor, &reverse, row == 24 ? 0 : 1, cfg_columns);
-      fputs(converted, f_screen);
+      len = gfx_conv_screen_to_pet(gfx_0400_buffer + gfx_offset + row * cfg_columns, gfx_d800_buffer + gfx_offset + row * cfg_columns, converted, &lastcolor, &reverse, row == 24 ? 0 : 1, cfg_columns);
+      fwrite(converted, len, 1, f_screen);
     }
     fclose(f_screen);
   } else {

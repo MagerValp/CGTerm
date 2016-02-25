@@ -33,7 +33,7 @@ void gfx_togglerev(void);
 void gfx_updatecolor(void);
 void gfx_delete(void);
 void gfx_insert(void);
-void gfx_conv_screen_to_pet(unsigned char *chars, unsigned char *colors, unsigned char *petsciibuf, int *lastcolor, int *reverse, int addcr, int width);
+int gfx_conv_screen_to_pet(unsigned char *chars, unsigned char *colors, unsigned char *petsciibuf, int *lastcolor, int *reverse, int addcr, int width);
 void gfx_savescreen(char *filename);
 void gfx_toggle_fullscreen(void);
 void gfx_set_offset(int offset);

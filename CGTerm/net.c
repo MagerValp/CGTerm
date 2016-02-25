@@ -45,7 +45,7 @@ signed int buflen;
 void (*net_status)(int, char *);
 
 
-int net_connect(unsigned char *host, int port, void (*status)(int, char *)) {
+int net_connect(char *host, int port, void (*status)(int, char *)) {
   struct sockaddr_in address;
   struct hostent *hostent;
 #ifdef __WIN32__
@@ -105,7 +105,7 @@ signed int net_receive(void) {
     return(-2);
   }
   if (!buflen) {
-    buflen = recv(conn, buffer, BUFSIZE, 0);
+    buflen = (signed int)recv(conn, buffer, BUFSIZE, 0);
     if (buflen == 0) {
       net_disconnect();
       return(-2);

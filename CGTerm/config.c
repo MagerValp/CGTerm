@@ -61,7 +61,7 @@ int cfg_init(char *argv0) {
 #ifdef WINDOWS
   cfg_homedir = ".";
 #else
-  int l;
+  size_t l;
 
   if ((cfg_homedir = getenv("HOME")) == NULL) {
     printf("$HOME is not set, using current directory\n");
@@ -86,7 +86,7 @@ int cfg_init(char *argv0) {
 
 
 void real_cfg_change_dir(char *dirbuffer, char *newdir) {
-  int l, n;
+  size_t l, n;
   char *p;
 
   n = strlen(newdir);
@@ -253,21 +253,21 @@ signed int cfg_readconfig(char *configfile) {
 	    return(-1);
 	  }
 	} else if (strcmp(key, "port") == 0) {
-	  cfg_port = strtol(value, (char **)NULL, 10);
+	  cfg_port = (unsigned int)strtol(value, (char **)NULL, 10);
 	  if (cfg_port <= 0 || cfg_port > 65535) {
 	    printf("Invalid port number in %s: %s\n", configfile, value);
 	    fclose(cfg);
 	    return(-1);
 	  }
 	} else if (strcmp(key, "senddelay") == 0) {
-	  cfg_senddelay = strtol(value, (char **)NULL, 10);
+	  cfg_senddelay = (int)strtol(value, (char **)NULL, 10);
 	  if (cfg_senddelay < 0 || cfg_senddelay > 10000) {
 	    printf("Invalid send delay in %s: %s\n", configfile, value);
 	    fclose(cfg);
 	    return(-1);
 	  }
 	} else if (strcmp(key, "receivedelay") == 0) {
-	  cfg_recvdelay = strtol(value, (char **)NULL, 10);
+	  cfg_recvdelay = (int)strtol(value, (char **)NULL, 10);
 	  if (cfg_recvdelay < 0 || cfg_recvdelay > 10000) {
 	    printf("Invalid receive delay in %s: %s\n", configfile, value);
 	    fclose(cfg);
@@ -322,21 +322,21 @@ signed int cfg_readconfig(char *configfile) {
 	    return(-1);
 	  }
 	} else if (strcmp(key, "zoom") == 0) {
-	  cfg_zoom = strtol(value, (char **)NULL, 10);
+	  cfg_zoom = (int)strtol(value, (char **)NULL, 10);
 	  if (cfg_zoom <= 0 || cfg_zoom > 8) {
 	    printf("Invalid zoom value in %s: %s\n", configfile, value);
 	    fclose(cfg);
 	    return(-1);
 	  }
 	} else if (strcmp(key, "reconnect") == 0) {
-	  cfg_reconnect = strtol(value, (char **)NULL, 10);
+	  cfg_reconnect = (int)strtol(value, (char **)NULL, 10);
 	  if (cfg_reconnect <= 0 || cfg_reconnect > 10000) {
 	    printf("Invalid reconnect delay in %s: %s\n", configfile, value);
 	    fclose(cfg);
 	    return(-1);
 	  }
 	} else if (strcmp(key, "columns") == 0) {
-	  cfg_columns = strtol(value, (char **)NULL, 10);
+	  cfg_columns = (int)strtol(value, (char **)NULL, 10);
 	  if (cfg_columns != 40 && cfg_columns != 80) {
 	    printf("Invalid number of columns in %s: %s\n", configfile, value);
 	    fclose(cfg);

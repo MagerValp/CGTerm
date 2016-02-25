@@ -21,6 +21,6 @@ extern unsigned char screencode[];
 
 int kernal_init(void);
 void ffd2(unsigned char a);
-void print(unsigned char *s);
-void print_ascii(unsigned char *s);
+void print(char *s);
+void print_ascii(char *s);
 unsigned char ffe4(void);

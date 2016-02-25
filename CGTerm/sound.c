@@ -15,7 +15,7 @@ int sound_bell;
 int sound_initok = 0;
 SDL_AudioSpec sound_audiospec;
 int sound_numsamples;
-int sound_length[MAXSAMPLES];
+Uint32 sound_length[MAXSAMPLES];
 Uint8 *sound_buffer[MAXSAMPLES];
 SoundControl sound_control;
 
