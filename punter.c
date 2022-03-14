@@ -49,7 +49,7 @@ int punter_recv_string(char *sendstring, char *recvstring) {
       return(0);
     }
   }
-  recvstring[4] = 0;
+  recvstring[3] = 0;
   //printf("punter_recv_string: received \"%s\"\n", recvstring);
 
   return(3);
